@@ -26,7 +26,7 @@ export default function TabLayout() {
         borderRadius: 30,
         marginHorizontal: 20,
         marginBottom: 10, 
-        height: 65, 
+        height: 60, 
         borderTopWidth: 0,
         shadowColor: '#000',
         shadowOpacity: 0.1,
@@ -35,29 +35,24 @@ export default function TabLayout() {
       },
       }}>
       <Tabs.Screen
-        name="plant"
+        name="index"
         options={{
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="user.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="activityPage"
         options={{
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="compass.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="1"
+        name="plant"
         options={{
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="world.fill" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="2"
-        options={{
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="cart.fill" color={color} />,
-        }}
-      />
+     
     </Tabs>
   );
 }
