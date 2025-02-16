@@ -12,15 +12,44 @@ export class parkselection extends Component {
     
 
     state = {
-        selectedMode: null, // State to track which icon is selected
+        currentLocation: null,
+        selectedMode: null,
+        selectedActivity:null,
     };
 
     handleSelectMode = (mode) => {
         this.setState({ selectedMode: mode });
     };
     
-    handleSubmit = () =>{
-        alert("Processing..");
+    handleSubmit = async() =>{
+        const {currentLocation, selectedMode, selectedActivity} = this.state;
+
+        const API_URL = 'http://localhost:8082';
+
+        try {
+            const response = await fetch(`${API_URL}/submit`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    location: currentLocation,
+                    mode: selectedMode,
+                    activity: selectedActivity
+                })
+            });
+    
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Data received:', data);
+                // Handle data here (e.g., navigate to a new screen, show a message)
+            } else {
+                throw new Error(data.error || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle errors here (e.g., show an error message)
+        }
     };
 
 
