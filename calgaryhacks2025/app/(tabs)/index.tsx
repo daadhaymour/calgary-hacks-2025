@@ -91,8 +91,8 @@ const App: React.FC = () => {
     { id: 1, name: 'Take a nature photo', completed: false },
     { id: 2, name: 'Spot a bird', completed: false },
     { id: 3, name: 'Pick up trash', completed: false },
-    { id: 4, name: 'Find a unique leaf', completed: false },
-    { id: 5, name: 'Walk 1000 steps', completed: false },
+    { id: 4, name: 'Hike near the mountains', completed: false },
+    { id: 5, name: 'Visit Lake Louise', completed: false },
   ]);
 
   const toggleActivity = (id: number) => {
@@ -105,7 +105,7 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header parkName="Central Park" score={100} />
+      <Header parkName="Banff National Park" score={100} />
       <ScrollView style={styles.scrollView}>
         {activities.map(activity => (
           <ActivityItem
