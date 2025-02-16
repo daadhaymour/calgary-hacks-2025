@@ -1,7 +1,10 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
+import React, { useState, useEffect } from 'react';
 
 import { PixelRatio } from 'react-native';
+
+
 
 const imageSize = PixelRatio.getPixelSizeForLayoutSize(100); // Adjust size dynamically
 
@@ -10,7 +13,146 @@ const waterIcon = require('../../assets/images/water_icon.png');
 const sunIcon = require('../../assets/images/sun_icon.png');
 const fertilizerIcon = require('../../assets/images/fertilizer_icon.png');
 
+const plant1 = require('../../assets/images/plant1.png');
 
+const plantGrowth = [
+  require('../../assets/images/plant1.png'),
+  require('../../assets/images/plant2.png'),
+  require('../../assets/images/plant3.png'),
+  require('../../assets/images/plant4.png'),
+  require('../../assets/images/plant5.png'),
+  require('../../assets/images/plant6.png'),
+];
+
+const plantWilting = [
+  require('../../assets/images/wilted1.png'),
+  require('../../assets/images/wilted2.png'),
+  require('../../assets/images/wilted3.png'),
+  require('../../assets/images/wilted4.png'),
+  require('../../assets/images/wilted5.png'),
+  require('../../assets/images/wilted6.png'),
+];
+
+const deadPlant = require('../../assets/images/emptypot.png');
+
+
+
+
+const HomeScreen = () => {
+  const [points, setPoints] = useState(100); // User's points
+  const [health, setHealth] = useState(60);  // Starts with mid-health
+  const [reduced, setReduced] = useState(false); // Track if health has decreased
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHealth(prev => {
+        if (prev > 0) {
+          setReduced(true); // Mark plant as wilted
+          return Math.max(prev - 5, 0); // Reduce by 5 every interval
+        }
+        return prev;
+      });
+    }, 5000); // Every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Determine plant image based on health & reduced state
+  const getPlantImage = () => {
+    if (health === 0) return deadPlant;
+    
+    if (reduced) { // If plant has wilted, show wilting images
+      if (health <= 110) return plantWilting[5];
+      if (health <= 900) return plantWilting[4];
+      if (health <= 80) return plantWilting[3];
+      if (health <= 40) return plantWilting[2];
+      if (health <= 20) return plantWilting[1];
+      return plantWilting[0];
+    } else { // Otherwise, show growth images
+      if (health <= 70) return plantGrowth[0];
+      if (health <= 80) return plantGrowth[1];
+      if (health <= 90) return plantGrowth[2];
+      if (health <= 100) return plantGrowth[3];
+      if (health <= 110) return plantGrowth[4];
+      return plantGrowth[5]; // Fully grown
+    }
+  };
+
+  // Function to increase health using points
+  const improvePlant = (cost: number, increase: number) => {
+    if (points >= cost) {
+      setPoints(prev => prev - cost);
+      setHealth(prev => Math.min(prev + increase, 120)); // Max cap at 120
+      setReduced(false); // Mark plant as healthy again
+    }
+  };
+
+
+  return (
+    
+    <ThemedView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>🌱 GreenerMiles</Text>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsLabel}>Points Earned</Text>
+          <View style={styles.pointsBox}>
+            <Text style={styles.pointsText}>🌱 {points}</Text>
+          </View>
+        </View>
+      </View>
+      
+      {/* Plant Section */}
+      <View style={styles.plantContainer}>
+        <View >
+          <Image source={getPlantImage()} style={plant_size.itemIcon} />
+        </View>
+      </View>
+      
+      {/* Shop Section */}
+      <View style={styles.shopContainer}>
+        <View style={styles.bannerContainer}>
+          <Text style={styles.bannerText}>Buy an item below to grow the plant</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', gap: 10 }}>
+        <TouchableOpacity onPress={() => improvePlant(15, 10)} style={styles.item}>
+          <View style={styles.waterContainer}>
+            <Image source={waterIcon} style={icon_size.itemIcon} />
+          </View>
+          {/* <Text style={{ color: '#658576', fontSize: 22 }}>15</Text> */}
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>15</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => improvePlant(25, 10)} style={styles.item}>
+          <View style={styles.waterContainer}>
+            <Image source={sunIcon} style={icon_size.itemIcon} />
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>25</Text>
+          </View>        
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => improvePlant(35, 10)} style={styles.item}>
+          <View style={styles.waterContainer}>
+            <Image source={fertilizerIcon} style={icon_size.itemIcon} />
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>35</Text>
+          </View>        
+        </TouchableOpacity>
+      </View>
+
+      </View>
+      
+      {/* Bottom Navigation */}
+      <View style={styles.navbar}>
+      </View>
+    </ThemedView>
+  );
+}
 
 const icon_size = StyleSheet.create({
   itemIcon: {
@@ -22,80 +164,13 @@ const icon_size = StyleSheet.create({
 
 const plant_size = StyleSheet.create({
   itemIcon: {
-    resizeMode: 'contain', 
-    alignItems: 'center',        
+    alignItems: 'center',   
+    width: 200,
+    height: 200, 
+    marginTop: 30,
+    marginLeft: 30,    
   },
 });
-
-
-
-export default function HomeScreen() {
-  return (
-    
-    <ThemedView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>🌱 GreenerMiles</Text>
-        <View style={styles.pointsContainer}>
-          <Text style={styles.pointsLabel}>Points Earned</Text>
-          <View style={styles.pointsBox}>
-            <Text style={styles.pointsText}>🌱 100</Text>
-          </View>
-        </View>
-      </View>
-      
-      {/* Plant Section */}
-      <View style={styles.plantContainer}>
-      <Image 
-  source={require('../../assets/images/emptypot.png')} 
-  style={{ width: imageSize, height: imageSize, resizeMode: 'cover' }} 
-/>
-      </View>
-      
-      {/* Shop Section */}
-      <View style={styles.shopContainer}>
-        <View style={styles.bannerContainer}>
-          <Text style={styles.bannerText}>Buy an item below to grow the plant</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', gap: 10 }}>
-        <TouchableOpacity style={styles.item}>
-          <View style={styles.waterContainer}>
-            <Image source={waterIcon} style={icon_size.itemIcon} />
-          </View>
-          {/* <Text style={{ color: '#658576', fontSize: 22 }}>15</Text> */}
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>15</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.item}>
-          <View style={styles.waterContainer}>
-            <Image source={sunIcon} style={icon_size.itemIcon} />
-          </View>
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>25</Text>
-          </View>        
-          </TouchableOpacity>
-
-        <TouchableOpacity style={styles.item}>
-          <View style={styles.waterContainer}>
-            <Image source={fertilizerIcon} style={icon_size.itemIcon} />
-          </View>
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>35</Text>
-          </View>        
-          </TouchableOpacity>
-      </View>
-
-      </View>
-      
-      {/* Bottom Navigation */}
-      <View style={styles.navbar}>
-      </View>
-    </ThemedView>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -233,3 +308,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',          // Bold text
   },
 });
+
+export default HomeScreen;
