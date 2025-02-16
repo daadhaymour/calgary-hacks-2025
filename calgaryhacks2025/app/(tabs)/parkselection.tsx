@@ -1,7 +1,29 @@
-import { Text, View,StyleSheet, TextInput, Image} from 'react-native'
+import { Text, View,StyleSheet, TextInput, Image,Button, TouchableOpacity} from 'react-native'
 import React, { Component } from 'react'
 
 export class parkselection extends Component {
+
+    icons = {
+        bike: require('../../assets/images/bikeicon.svg'),
+        bus: require('../../assets/images/busicon.svg'),
+        walk: require('../../assets/images/walkicon.svg'),
+        car: require('../../assets/images/caricon.svg'),
+    };
+    
+
+    state = {
+        selectedMode: null, // State to track which icon is selected
+    };
+
+    handleSelectMode = (mode) => {
+        this.setState({ selectedMode: mode });
+    };
+    
+    handleSubmit = () =>{
+        alert("Processing..");
+    };
+
+
   render() {
     return (
       <View style = {styles.background}>
@@ -13,6 +35,8 @@ export class parkselection extends Component {
             style = {styles.pointsIcon}
             source={require("../../assets/images/leaf.svg")}
             />
+
+            <Text style = {styles.pointsText}>0</Text>
             </View>
         </View>
 
@@ -30,27 +54,21 @@ export class parkselection extends Component {
         <View style={styles.travelChoice}>
             <Text style={styles.travelText}>How are you getting there?</Text>
             
-            <Image
-
-            style = {styles.iconStyle}
-            source={require('../../assets/images/bikeicon.svg')}
             
-            />
-
-            <Image
-            style = {styles.iconStyle}
-            source={require('../../assets/images/busicon.svg')}
-            />
-
-            <Image
-            style = {styles.iconStyle}
-            source={require('../../assets/images/walkicon.svg')}
-            />
-
-            <Image
-            style = {styles.iconStyle}
-            source={require('../../assets/images/caricon.svg')}
-            />
+            {['bike', 'bus', 'walk', 'car'].map((mode: string) => (
+    <TouchableOpacity
+        key={mode}
+        onPress={() => this.handleSelectMode(mode)}
+        style={[
+            styles.iconStyle,
+            this.state.selectedMode === mode && styles.selectedIcon
+                ]}
+            >
+                <Image
+                    source={this.icons[mode]}
+                />
+            </TouchableOpacity>
+        ))}
 
             
         </View>
@@ -61,6 +79,15 @@ export class parkselection extends Component {
         >
 
         </TextInput>
+
+        <TouchableOpacity
+        onPress={this.handleSubmit}
+        style ={styles.enter_btn}
+        >
+            <Text style = {styles.enterText}>Enter</Text>
+
+        </TouchableOpacity>
+        
 
             
         </View>
@@ -100,6 +127,15 @@ const styles = StyleSheet.create({
 
     },
 
+    pointsText:{
+        position: "absolute",
+        color: "#597378",
+        marginLeft: 45,
+        marginTop: 5,
+        
+
+    },
+
     pointsIcon:{
         marginTop: 2,
 
@@ -121,9 +157,9 @@ const styles = StyleSheet.create({
         position:"absolute",
         backgroundColor: "#A8DFC9",
         width: 250,
-        height: 280,
+        height: 300,
         borderRadius: 25,
-        marginTop: 230,
+        marginTop: 250,
 
     },
 
@@ -131,10 +167,11 @@ const styles = StyleSheet.create({
         position: "absolute",
         backgroundColor:"#FDFDFD",
         width: 240,
-        height: 40,
+        height: 45,
+        paddingLeft: 10,
         borderRadius: 25,
-        marginBottom: 200,
-        textAlign: "center",
+        marginBottom: 240,
+        textAlign: "left",
         color: "#597378",
 
     },
@@ -149,7 +186,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         marginRight: 5,
-        marginTop: 30,
+        marginTop: 10,
 
     },
 
@@ -163,12 +200,20 @@ const styles = StyleSheet.create({
     },
 
     iconStyle:{
+        justifyContent:"center",
+        alignItems: "center",
         marginTop: 100,
         margin: 10,
         width: 40,
         height: 35,
         borderRadius:10,
         backgroundColor: "#FDFDFD",
+
+    },
+
+    selectedIcon: {
+        borderWidth: 2,
+        borderColor: '#7B9E90' // Outline color when an icon is selected
     },
 
     activity:{
@@ -177,11 +222,29 @@ const styles = StyleSheet.create({
         width: 240,
         height: 50,
         borderRadius: 25,
-        marginBottom: -170,
+        marginBottom: -100,
         textAlign: "center",
         color: "#597378",
 
+    },
+
+    enter_btn:{
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius: 25,
+        width:70,
+        height:40,
+        marginBottom:20,
+        backgroundColor: "#7B9E90",
+    },
+
+    enterText:{
+        color: "white",
+        fontWeight: "bold",
+
     }
+
+
     
 })
 
