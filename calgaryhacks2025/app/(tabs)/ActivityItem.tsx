@@ -29,10 +29,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#C5E5D0',
+    // backgroundColor: '#C5E5D0',
+    backgroundColor:'#A8DFC9',
     borderRadius: 12,
     marginVertical: 6,
     marginHorizontal: 10,
+
+    // shadows - different for iOS and Android
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // Android shadow
+
   },
   activityText: {
     fontSize: 16,
