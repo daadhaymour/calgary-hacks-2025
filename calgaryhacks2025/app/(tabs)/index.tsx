@@ -1,74 +1,235 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
+
+import { PixelRatio } from 'react-native';
+
+const imageSize = PixelRatio.getPixelSizeForLayoutSize(100); // Adjust size dynamically
+
+
+const waterIcon = require('../../assets/images/water_icon.png');
+const sunIcon = require('../../assets/images/sun_icon.png');
+const fertilizerIcon = require('../../assets/images/fertilizer_icon.png');
+
+
+
+const icon_size = StyleSheet.create({
+  itemIcon: {
+    width: 60,  // Reduce the size (Adjust as needed)
+    height: 60, 
+    resizeMode: 'contain', // Ensures the image scales correctly
+  },
+});
+
+const plant_size = StyleSheet.create({
+  itemIcon: {
+    resizeMode: 'contain', 
+    alignItems: 'center',        
+  },
+});
+
+
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    
+    <ThemedView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>🌱 GreenerMiles</Text>
+        <View style={styles.pointsContainer}>
+          <Text style={styles.pointsLabel}>Points Earned</Text>
+          <View style={styles.pointsBox}>
+            <Text style={styles.pointsText}>🌱 100</Text>
+          </View>
+        </View>
+      </View>
+      
+      {/* Plant Section */}
+      <View style={styles.plantContainer}>
+      <Image 
+  source={require('../../assets/images/emptypot.png')} 
+  style={{ width: imageSize, height: imageSize, resizeMode: 'cover' }} 
+/>
+      </View>
+      
+      {/* Shop Section */}
+      <View style={styles.shopContainer}>
+        <View style={styles.bannerContainer}>
+          <Text style={styles.bannerText}>Buy an item below to grow the plant</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', gap: 10 }}>
+        <TouchableOpacity style={styles.item}>
+          <View style={styles.waterContainer}>
+            <Image source={waterIcon} style={icon_size.itemIcon} />
+          </View>
+          {/* <Text style={{ color: '#658576', fontSize: 22 }}>15</Text> */}
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>15</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.item}>
+          <View style={styles.waterContainer}>
+            <Image source={sunIcon} style={icon_size.itemIcon} />
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>25</Text>
+          </View>        
+          </TouchableOpacity>
+
+        <TouchableOpacity style={styles.item}>
+          <View style={styles.waterContainer}>
+            <Image source={fertilizerIcon} style={icon_size.itemIcon} />
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>35</Text>
+          </View>        
+          </TouchableOpacity>
+      </View>
+
+      </View>
+      
+      {/* Bottom Navigation */}
+      <View style={styles.navbar}>
+      </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#E6FAE6',
+    padding: 20,
+  },
+  header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4C9A2A',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  pointsContainer: {
+    alignItems: 'center',
+  },
+  pointsLabel: {
+    fontSize: 14,
+    color: '#4C9A2A',
+  },
+  pointsBox: {
+    backgroundColor: '#fff',
+    padding: 8,
+    borderRadius: 20,
+  },
+  pointsText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  plantContainer: {
+    height: 270,
+    backgroundColor: '#A8DFC9',
+    borderRadius: 20,
+    marginVertical: 20,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 }, 
+    shadowOpacity: 0.3, 
+    shadowRadius: 10, 
+
+    elevation: 5, 
+
+  },
+  shopContainer: {
+    backgroundColor: '#8FB0C4',
+    padding: 25,
+    borderRadius: 15,
+    height: 180,
+    alignItems: 'center',
+    bottom: 4.5,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 }, 
+    shadowOpacity: 0.3, 
+    shadowRadius: 10, 
+
+    elevation: 5,
+  },
+
+  waterContainer: {
+    width: 70, // Adjust size
+    height: 70, // Must be equal to width
+    borderRadius: 40, // Half of width/height to make it a circle
+    backgroundColor: '#DAFCEE', // Change color
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 6,
+    
+    
+  },
+  shopTitle: {
+    fontSize: 14,
+    marginBottom: 10,
+  },
+  itemsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  item: {
+    alignItems: 'center',
+  },
+  itemIcon: {
+    fontSize: 24,
+  },
+  itemPrice: {
+    fontSize: 14,
+    marginTop: 5,
+  },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#E6FAE6',
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 15,
+  },
+  navIcon: {
+    fontSize: 24,
+  },  
+  
+  priceContainer: {
+    backgroundColor: '#E6FAE6',  // Light green background
+    paddingHorizontal: 20,       // Space on the left & right
+    paddingVertical: 1,          // Space on the top & bottom
+    borderRadius: 20,            // Makes it rounded
+    alignItems: 'center',        // Centers text horizontally
+    justifyContent: 'center',    // Centers text vertically
+    marginTop: 15,
+  },
+  priceText: {
+    color: '#658576',            // Text color (green-gray)
+    fontSize: 22,                // Text size
+    fontWeight: 'bold',          // Bold text
+  },
+
+  bannerContainer: {
+    backgroundColor: '#E6FAE6',  // Light green background
+    paddingVertical: 8,         // Top & bottom padding
+    paddingHorizontal: 12,       // Left & right padding
+    borderRadius: 30,            // Makes it rounded
+    alignItems: 'center',        // Centers text horizontally
+    justifyContent: 'center',    // Centers text vertically
+    width: '110%',                // Adjust width as needed
+    alignSelf: 'center',         // Centers the banner in the parent container
+    bottom: 9,
+  },
+  bannerText: {
+    color: '#658576',            // Text color (green-gray)
+    fontSize: 10,                // Text size
+    fontWeight: 'bold',          // Bold text
   },
 });
