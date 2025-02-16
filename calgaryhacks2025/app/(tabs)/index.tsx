@@ -6,7 +6,7 @@ import { PixelRatio } from 'react-native';
 
 
 
-const imageSize = PixelRatio.getPixelSizeForLayoutSize(100); // Adjust size dynamically
+const imageSize = PixelRatio.getPixelSizeForLayoutSize(100); 
 
 
 const waterIcon = require('../../assets/images/water_icon.png');
@@ -39,16 +39,16 @@ const deadPlant = require('../../assets/images/emptypot.png');
 
 
 const HomeScreen = () => {
-  const [points, setPoints] = useState(100); // User's points
-  const [health, setHealth] = useState(60);  // Starts with mid-health
-  const [reduced, setReduced] = useState(false); // Track if health has decreased
+  const [points, setPoints] = useState(100);
+  const [health, setHealth] = useState(60); 
+  const [reduced, setReduced] = useState(false); 
 
   useEffect(() => {
     const interval = setInterval(() => {
       setHealth(prev => {
         if (prev > 0) {
-          setReduced(true); // Mark plant as wilted
-          return Math.max(prev - 5, 0); // Reduce by 5 every interval
+          setReduced(true); 
+          return Math.max(prev - 5, 0); 
         }
         return prev;
       });
@@ -57,33 +57,31 @@ const HomeScreen = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Determine plant image based on health & reduced state
   const getPlantImage = () => {
     if (health === 0) return deadPlant;
     
-    if (reduced) { // If plant has wilted, show wilting images
+    if (reduced) { 
       if (health <= 10) return plantWilting[1];
       if (health <= 20) return plantWilting[2];
       if (health <= 50) return plantWilting[3];
       if (health <= 80) return plantWilting[4];
       if (health <= 120) return plantWilting[5];
       return plantWilting[0];
-    } else { // Otherwise, show growth images
+    } else { 
       if (health <= 70) return plantGrowth[0];
       if (health <= 80) return plantGrowth[1];
       if (health <= 90) return plantGrowth[2];
       if (health <= 100) return plantGrowth[3];
       if (health <= 110) return plantGrowth[4];
-      return plantGrowth[5]; // Fully grown
+      return plantGrowth[5]; 
     }
   };
 
-  // Function to increase health using points
   const improvePlant = (cost: number, increase: number) => {
     if (points >= cost) {
       setPoints(prev => prev - cost);
-      setHealth(prev => Math.min(prev + increase, 120)); // Max cap at 120
-      setReduced(false); // Mark plant as healthy again
+      setHealth(prev => Math.min(prev + increase, 120)); 
+      setReduced(false); 
     }
   };
 
@@ -156,9 +154,9 @@ const HomeScreen = () => {
 
 const icon_size = StyleSheet.create({
   itemIcon: {
-    width: 60,  // Reduce the size (Adjust as needed)
+    width: 60,  
     height: 60, 
-    resizeMode: 'contain', // Ensures the image scales correctly
+    resizeMode: 'contain', 
   },
 });
 
@@ -235,10 +233,10 @@ const styles = StyleSheet.create({
   },
 
   waterContainer: {
-    width: 70, // Adjust size
-    height: 70, // Must be equal to width
-    borderRadius: 40, // Half of width/height to make it a circle
-    backgroundColor: '#DAFCEE', // Change color
+    width: 70, 
+    height: 70, 
+    borderRadius: 40,
+    backgroundColor: '#DAFCEE', 
     justifyContent: 'center',
     alignItems: 'center',
     top: 6,
@@ -277,35 +275,35 @@ const styles = StyleSheet.create({
   },  
   
   priceContainer: {
-    backgroundColor: '#E6FAE6',  // Light green background
-    paddingHorizontal: 20,       // Space on the left & right
-    paddingVertical: 1,          // Space on the top & bottom
-    borderRadius: 20,            // Makes it rounded
-    alignItems: 'center',        // Centers text horizontally
-    justifyContent: 'center',    // Centers text vertically
+    backgroundColor: '#E6FAE6',  
+    paddingHorizontal: 20,       
+    paddingVertical: 1,          
+    borderRadius: 20,           
+    alignItems: 'center',       
+    justifyContent: 'center',   
     marginTop: 15,
   },
   priceText: {
-    color: '#658576',            // Text color (green-gray)
-    fontSize: 22,                // Text size
-    fontWeight: 'bold',          // Bold text
+    color: '#658576',          
+    fontSize: 22,              
+    fontWeight: 'bold',          
   },
 
   bannerContainer: {
-    backgroundColor: '#E6FAE6',  // Light green background
-    paddingVertical: 8,         // Top & bottom padding
-    paddingHorizontal: 12,       // Left & right padding
-    borderRadius: 30,            // Makes it rounded
-    alignItems: 'center',        // Centers text horizontally
-    justifyContent: 'center',    // Centers text vertically
-    width: '110%',                // Adjust width as needed
-    alignSelf: 'center',         // Centers the banner in the parent container
+    backgroundColor: '#E6FAE6', 
+    paddingVertical: 8,        
+    paddingHorizontal: 12,     
+    borderRadius: 30,           
+    alignItems: 'center',        
+    justifyContent: 'center',   
+    width: '110%',               
+    alignSelf: 'center',       
     bottom: 9,
   },
   bannerText: {
-    color: '#658576',            // Text color (green-gray)
-    fontSize: 10,                // Text size
-    fontWeight: 'bold',          // Bold text
+    color: '#658576',            
+    fontSize: 10,               
+    fontWeight: 'bold',         
   },
 });
 

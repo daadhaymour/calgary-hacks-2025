@@ -21,13 +21,13 @@ export default function TabLayout() {
       tabBarBackground: TabBarBackground,
       tabBarShowLabel: false,
       tabBarStyle: {
-        position: 'absolute', // Makes it float
-        backgroundColor: '#8FB0C4', // Solid light blue color (adjust as needed)
-        borderRadius: 30, // Rounded edges
-        marginHorizontal: 20, // Adds spacing from the sides
-        marginBottom: 10, // Slightly raises the tab bar
-        height: 65, // Adjusted height for a better look
-        borderTopWidth: 0, // Removes default border line
+        position: 'absolute',
+        backgroundColor: '#8FB0C4', 
+        borderRadius: 30,
+        marginHorizontal: 20,
+        marginBottom: 10, 
+        height: 65, 
+        borderTopWidth: 0,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 10,
