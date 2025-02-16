@@ -62,11 +62,11 @@ const HomeScreen = () => {
     if (health === 0) return deadPlant;
     
     if (reduced) { // If plant has wilted, show wilting images
-      if (health <= 110) return plantWilting[5];
-      if (health <= 900) return plantWilting[4];
-      if (health <= 80) return plantWilting[3];
-      if (health <= 40) return plantWilting[2];
-      if (health <= 20) return plantWilting[1];
+      if (health <= 10) return plantWilting[1];
+      if (health <= 20) return plantWilting[2];
+      if (health <= 50) return plantWilting[3];
+      if (health <= 80) return plantWilting[4];
+      if (health <= 120) return plantWilting[5];
       return plantWilting[0];
     } else { // Otherwise, show growth images
       if (health <= 70) return plantGrowth[0];
