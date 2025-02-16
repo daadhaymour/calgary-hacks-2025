@@ -35,7 +35,7 @@ export default function TabLayout() {
       },
       }}>
       <Tabs.Screen
-        name="index"
+        name="plant"
         options={{
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="user.fill" color={color} />,
         }}
@@ -47,7 +47,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="parkselection"
+        name="1"
         options={{
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="world.fill" color={color} />,
         }}
