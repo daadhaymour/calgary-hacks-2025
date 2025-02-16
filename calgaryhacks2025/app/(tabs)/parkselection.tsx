@@ -15,10 +15,25 @@ export class parkselection extends Component {
         currentLocation: null,
         selectedMode: null,
         selectedActivity:null,
+        points: 0,
     };
 
     handleSelectMode = (mode) => {
-        this.setState({ selectedMode: mode });
+        let pointstoAdd = 0;
+        if (mode=='bike'){
+            pointstoAdd=30;
+        }
+        if(mode=='walk'){
+            pointstoAdd = 100;
+        }
+        if(mode == 'bus'){
+            pointstoAdd = 20;
+        }
+        //update points
+        this.setState(prevState => ({
+            selectedMode: mode,
+            points: prevState.points + pointstoAdd // Update the points state
+        }));
     };
     
     handleSubmit = async() =>{
@@ -65,7 +80,7 @@ export class parkselection extends Component {
             source={require("../../assets/images/leaf.svg")}
             />
 
-            <Text style = {styles.pointsText}>0</Text>
+            <Text style = {styles.pointsText}>{this.state.points}</Text>
             </View>
         </View>
 
